@@ -15,8 +15,11 @@ export async function apiFetch<T>(path: string, options?: RequestInit): Promise<
         );
       }
       
+      // Handle other HTTP errors with status code
       const errorText = await response.text();
-      throw new Error(errorText || `Request failed: ${response.statusText}`);
+      throw new Error(
+        errorText || `Request failed with status ${response.status}: ${response.statusText}`
+      );
     }
     
     return await response.json();

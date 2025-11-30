@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { importBinanceCandles } from '../services/binanceAdminService';
 import type { BinanceImportResult } from '../types/trading';
 import { Card } from '../components/common/Card';
@@ -20,8 +21,17 @@ export function BinanceAdminPage() {
     try {
       const data = await importBinanceCandles({ symbol, timeframe, limit });
       setResult(data);
+      
+      // Show success toast
+      toast.success(
+        `Imported ${data.importedCount} candles for ${symbol} (${timeframe}) from Binance.`
+      );
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Import failed');
+      const errorMessage = err instanceof Error ? err.message : 'Import failed';
+      setError(errorMessage);
+      
+      // Show error toast
+      toast.error('Failed to import candles from Binance. Please check the symbol/timeframe and try again.');
     } finally {
       setLoading(false);
     }

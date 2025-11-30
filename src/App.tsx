@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { MainLayout } from './layout/MainLayout';
 import { DashboardPage } from './pages/DashboardPage';
 import { SignalsPage } from './pages/SignalsPage';
@@ -8,16 +9,19 @@ import { SettingsPage } from './pages/SettingsPage';
 
 function App() {
   return (
-    <MainLayout>
-      <Routes>
-        <Route path="/" element={<Navigate to="/signals" replace />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/signals" element={<SignalsPage />} />
-        <Route path="/history" element={<HistoryPage />} />
-        <Route path="/admin/binance" element={<BinanceAdminPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-      </Routes>
-    </MainLayout>
+    <>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Navigate to="/signals" replace />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/signals" element={<SignalsPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/admin/binance" element={<BinanceAdminPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+        </Routes>
+      </MainLayout>
+      <Toaster position="top-right" />
+    </>
   );
 }
 
