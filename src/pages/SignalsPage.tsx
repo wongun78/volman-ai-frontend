@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import type { AiSignalResponseDto, AiSuggestRequestDto, CandleDto } from '../types/trading';
 import { requestAiSignal, fetchSignalHistory } from '../services/aiSignalsService';
+import { fetchCandles } from '../services/candlesService';
 import { loadSettings } from '../services/settingsService';
-import { generateMockCandles } from '../services/candlesMockService';
 import { Card } from '../components/common/Card';
 import { SignalForm } from '../components/signals/SignalForm';
 import { LatestSignalCard } from '../components/signals/LatestSignalCard';
@@ -33,10 +33,23 @@ export function SignalsPage() {
     }
   };
 
+  const loadCandles = async () => {
+    try {
+      const data = await fetchCandles({
+        symbolCode: settings.defaultSymbolCode,
+        timeframe: settings.defaultTimeframe,
+        limit: 100,
+      });
+      setCandles(data);
+    } catch (err) {
+      console.error('Failed to load candles:', err);
+      toast.error('Failed to load chart data');
+    }
+  };
+
   useEffect(() => {
     loadHistory();
-    // Load mock candles on initial mount
-    setCandles(generateMockCandles(60));
+    loadCandles();
   }, []);
 
   const handleSubmit = async (request: AiSuggestRequestDto) => {

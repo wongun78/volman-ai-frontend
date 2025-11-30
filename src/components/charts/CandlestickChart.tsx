@@ -11,7 +11,7 @@ export function CandlestickChart({ candles, height = 320 }: CandlestickChartProp
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!chartContainerRef.current) return;
+    if (!chartContainerRef.current || candles.length === 0) return;
 
     // Create chart
     const chart = createChart(chartContainerRef.current, {
@@ -31,8 +31,8 @@ export function CandlestickChart({ candles, height = 320 }: CandlestickChartProp
       },
     });
 
-    // Add candlestick series (v5 API)
-    const candlestickSeries = (chart as any).addCandlestickSeries({
+    // Add candlestick series
+    const candlestickSeries = chart.addCandlestickSeries({
       upColor: '#10b981',
       downColor: '#ef4444',
       borderUpColor: '#10b981',
@@ -43,7 +43,7 @@ export function CandlestickChart({ candles, height = 320 }: CandlestickChartProp
 
     // Convert CandleDto to lightweight-charts format
     const chartData = candles.map((candle) => ({
-      time: Math.floor(new Date(candle.timestamp).getTime() / 1000) as any,
+      time: (new Date(candle.timestamp).getTime() / 1000) as any,
       open: candle.open,
       high: candle.high,
       low: candle.low,
