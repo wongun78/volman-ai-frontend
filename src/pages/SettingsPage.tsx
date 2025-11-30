@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import type { AppSettings } from '../types/trading';
 import { loadSettings, saveSettings, defaultSettings } from '../services/settingsService';
-import { Card } from '../components/common/Card';
 
 export function SettingsPage() {
   const [settings, setSettings] = useState<AppSettings>(loadSettings());

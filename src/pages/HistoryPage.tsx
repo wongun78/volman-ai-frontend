@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import type { SpringPage, AiSignalResponseDto } from '../types/trading';
 import { fetchSignalHistory } from '../services/aiSignalsService';
 import { loadSettings } from '../services/settingsService';
-import { Card } from '../components/common/Card';
 import { SignalHistoryTable } from '../components/signals/SignalHistoryTable';
 
 export function HistoryPage() {

@@ -4,7 +4,6 @@ import type { AiSignalResponseDto, AiSuggestRequestDto, CandleDto } from '../typ
 import { requestAiSignal, fetchSignalHistory } from '../services/aiSignalsService';
 import { fetchBinanceLiveCandles } from '../services/binanceLiveService';
 import { loadSettings } from '../services/settingsService';
-import { Card } from '../components/common/Card';
 import { SignalForm } from '../components/signals/SignalForm';
 import { LatestSignalCard } from '../components/signals/LatestSignalCard';
 import { SignalHistoryTable } from '../components/signals/SignalHistoryTable';

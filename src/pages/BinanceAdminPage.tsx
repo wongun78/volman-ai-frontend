@@ -2,7 +2,6 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { importBinanceCandles } from '../services/binanceAdminService';
 import type { BinanceImportResult } from '../types/trading';
-import { Card } from '../components/common/Card';
 
 export function BinanceAdminPage() {
   const [symbol, setSymbol] = useState('BTCUSDT');
