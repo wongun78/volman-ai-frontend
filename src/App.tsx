@@ -37,10 +37,13 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
 
 function App() {
   // Form state
-  const [symbolCode, setSymbolCode] = useState('XAUUSD')
+  const [symbolCode, setSymbolCode] = useState('BTCUSDT')
   const [timeframe, setTimeframe] = useState('M5')
   const [mode, setMode] = useState('SCALPING')
   const [maxRiskPerTrade, setMaxRiskPerTrade] = useState<number | ''>('')
+
+  // Symbol type detection
+  const isCrypto = symbolCode.endsWith('USDT') || symbolCode.endsWith('BTC') || symbolCode.endsWith('ETH')
 
   // UI state
   const [latestSignal, setLatestSignal] = useState<AiSignalResponseDto | null>(null)
@@ -163,14 +166,29 @@ function App() {
                 <label className="block text-sm font-medium text-slate-300 mb-1">
                   Symbol Code
                 </label>
-                <input
-                  type="text"
+                <select
                   value={symbolCode}
                   onChange={(e) => setSymbolCode(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="XAUUSD"
-                  required
-                />
+                >
+                  <optgroup label="🪙 Cryptocurrencies (Real-time Binance Data)">
+                    <option value="BTCUSDT">BTC/USDT - Bitcoin</option>
+                    <option value="ETHUSDT">ETH/USDT - Ethereum</option>
+                    <option value="BNBUSDT">BNB/USDT - Binance Coin</option>
+                    <option value="SOLUSDT">SOL/USDT - Solana</option>
+                    <option value="XRPUSDT">XRP/USDT - Ripple</option>
+                  </optgroup>
+                  <optgroup label="💰 Forex / Commodities (Mock Data)">
+                    <option value="XAUUSD">XAU/USD - Gold</option>
+                    <option value="EURUSD">EUR/USD - Euro</option>
+                    <option value="GBPUSD">GBP/USD - Pound</option>
+                  </optgroup>
+                </select>
+                {isCrypto && (
+                  <p className="text-xs text-emerald-400 mt-1">
+                    ✓ Real-time data from Binance API
+                  </p>
+                )}
               </div>
 
               <div>
