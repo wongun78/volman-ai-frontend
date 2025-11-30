@@ -1,4 +1,4 @@
-import { AppSettings } from '../types/trading';
+import type { AppSettings } from '../types/trading';
 import { getApiBase } from './apiClient';
 
 const STORAGE_KEY = 'volman-ai-settings';

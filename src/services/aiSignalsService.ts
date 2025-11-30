@@ -1,4 +1,4 @@
-import { AiSignalResponseDto, AiSuggestRequestDto, SpringPage } from '../types/trading';
+import type { AiSignalResponseDto, AiSuggestRequestDto, SpringPage } from '../types/trading';
 import { apiFetch } from './apiClient';
 
 export async function requestAiSignal(body: AiSuggestRequestDto): Promise<AiSignalResponseDto> {

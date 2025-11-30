@@ -1,4 +1,4 @@
-import { Direction } from '../../types/trading';
+import type { Direction } from '../../types/trading';
 
 interface DirectionBadgeProps {
   direction: Direction;

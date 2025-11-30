@@ -1,4 +1,4 @@
-import { BinanceImportResult } from '../types/trading';
+import type { BinanceImportResult } from '../types/trading';
 import { apiFetch } from './apiClient';
 
 export async function importBinanceCandles(params: {
