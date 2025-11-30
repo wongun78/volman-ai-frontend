@@ -120,7 +120,9 @@ export function LatestSignalCard({ signal }: LatestSignalCardProps) {
       {signal.reasoning && (
         <div className="bg-white/0.5 p-5 border border-white/3">
           <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-3">AI Analysis</div>
-          <div className="text-sm text-slate-400 leading-relaxed">{signal.reasoning}</div>
+          <div className="text-sm text-slate-400 leading-relaxed whitespace-pre-line font-mono">
+            {signal.reasoning}
+          </div>
         </div>
       )}
     </div>
