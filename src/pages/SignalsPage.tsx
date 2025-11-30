@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import type { AiSignalResponseDto, AiSuggestRequestDto, CandleDto } from '../types/trading';
 import { requestAiSignal, fetchSignalHistory } from '../services/aiSignalsService';
-import { fetchCandles } from '../services/candlesService';
+import { fetchBinanceLiveCandles } from '../services/binanceLiveService';
 import { loadSettings } from '../services/settingsService';
 import { Card } from '../components/common/Card';
 import { SignalForm } from '../components/signals/SignalForm';
@@ -35,21 +35,29 @@ export function SignalsPage() {
 
   const loadCandles = async () => {
     try {
-      const data = await fetchCandles({
-        symbolCode: settings.defaultSymbolCode,
-        timeframe: settings.defaultTimeframe,
+      // Fetch directly from Binance API (real-time, no backend/database)
+      const data = await fetchBinanceLiveCandles({
+        symbol: settings.defaultSymbolCode,
+        interval: '5m', // Map M5 to Binance format
         limit: 100,
       });
       setCandles(data);
     } catch (err) {
       console.error('Failed to load candles:', err);
-      toast.error('Failed to load chart data');
+      toast.error('Failed to load chart data from Binance');
     }
   };
 
   useEffect(() => {
     loadHistory();
     loadCandles();
+
+    // Auto-refresh candles every 1 second for M5 real-time updates
+    const intervalId = setInterval(() => {
+      loadCandles();
+    }, 1000); // 1 second
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleSubmit = async (request: AiSuggestRequestDto) => {
@@ -81,31 +89,75 @@ export function SignalsPage() {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card title="Request AI Trade Signal">
-          <SignalForm
-            onSubmit={handleSubmit}
-            loading={loading}
-            error={error}
-            initialSymbol={settings.defaultSymbolCode}
-            initialTimeframe={settings.defaultTimeframe}
-            initialMode={settings.defaultMode}
-          />
-        </Card>
-
-        <Card title="Latest AI Signal">
-          <LatestSignalCard signal={latestSignal} />
-        </Card>
+    <div className="min-h-screen">
+      {/* Hero Header */}
+      <div className="mb-8">
+        <div className="relative overflow-hidden bg-white/[0.01] border border-white/[0.03] p-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-medium tracking-tight text-[#9ca8c8] mb-1">
+                AI Trading Signals
+              </h1>
+              <p className="text-slate-600 text-xs tracking-wide">Bob Volman Price Action Analysis</p>
+            </div>
+            <div className="text-right">
+              <div className="text-[10px] text-slate-700 tracking-wider uppercase mb-1">Market Time</div>
+              <div className="text-sm text-slate-400">{new Date().toLocaleTimeString()}</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <Card title="Price Action Candles">
-        <CandlestickChart candles={candles} height={320} />
-      </Card>
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        {/* Left Column - Signal Generator */}
+        <div className="lg:col-span-1">
+          <div className="card-shadow bg-[#12141a]/60 border border-white/[0.03] p-6 sticky top-6">
+            <div className="mb-6">
+              <div className="text-[10px] text-slate-600 mb-2 tracking-widest uppercase">Signal Generator</div>
+              <h2 className="text-base font-medium text-slate-300">Request Analysis</h2>
+            </div>
+            <SignalForm
+              onSubmit={handleSubmit}
+              loading={loading}
+              error={error}
+              initialSymbol={settings.defaultSymbolCode}
+              initialTimeframe={settings.defaultTimeframe}
+              initialMode={settings.defaultMode}
+            />
+          </div>
+        </div>
 
-      <Card title="Signal History">
+        {/* Right Column - Results */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Latest Signal */}
+          <div className="card-shadow bg-[#12141a]/60 border border-white/[0.03] p-6">
+            <div className="mb-6">
+              <div className="text-[10px] text-slate-600 mb-2 tracking-widest uppercase">Latest Signal</div>
+              <h2 className="text-base font-medium text-slate-300">AI Recommendation</h2>
+            </div>
+            <LatestSignalCard signal={latestSignal} />
+          </div>
+
+          {/* Price Chart */}
+          <div className="card-shadow bg-[#12141a]/60 border border-white/[0.03] p-6">
+            <div className="mb-6">
+              <div className="text-[10px] text-slate-600 mb-2 tracking-widest uppercase">Price Action</div>
+              <h2 className="text-base font-medium text-slate-300">Live Chart</h2>
+            </div>
+            <CandlestickChart candles={candles} height={320} />
+          </div>
+        </div>
+      </div>
+
+      {/* Signal History */}
+      <div className="card-shadow bg-[#12141a]/60 border border-white/[0.03] p-6">
+        <div className="mb-6">
+          <div className="text-[10px] text-slate-600 mb-2 tracking-widest uppercase">History</div>
+          <h2 className="text-base font-medium text-slate-300">Previous Signals</h2>
+        </div>
         <SignalHistoryTable signals={history} onRefresh={loadHistory} />
-      </Card>
+      </div>
     </div>
   );
 }

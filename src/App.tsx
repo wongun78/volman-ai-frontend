@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { MainLayout } from './layout/MainLayout';
-import { DashboardPage } from './pages/DashboardPage';
 import { SignalsPage } from './pages/SignalsPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { BinanceAdminPage } from './pages/BinanceAdminPage';
@@ -13,7 +12,6 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path="/" element={<Navigate to="/signals" replace />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/signals" element={<SignalsPage />} />
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/admin/binance" element={<BinanceAdminPage />} />

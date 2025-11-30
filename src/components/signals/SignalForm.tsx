@@ -39,68 +39,71 @@ export function SignalForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1">
-          Symbol Code
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="space-y-2">
+        <label className="block text-[10px] text-slate-600 tracking-widest uppercase">
+          Symbol
         </label>
         <select
           value={symbolCode}
           onChange={(e) => setSymbolCode(e.target.value)}
-          className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2.5 bg-white/[0.01] border border-white/[0.05] text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
         >
-          <optgroup label="🪙 Cryptocurrencies (Real-time Binance Data)">
-            <option value="BTCUSDT">BTC/USDT - Bitcoin</option>
-            <option value="ETHUSDT">ETH/USDT - Ethereum</option>
-            <option value="BNBUSDT">BNB/USDT - Binance Coin</option>
-            <option value="SOLUSDT">SOL/USDT - Solana</option>
-            <option value="XRPUSDT">XRP/USDT - Ripple</option>
+          <optgroup label="Crypto">
+            <option value="BTCUSDT">BTC/USDT</option>
+            <option value="ETHUSDT">ETH/USDT</option>
+            <option value="BNBUSDT">BNB/USDT</option>
+            <option value="SOLUSDT">SOL/USDT</option>
+            <option value="XRPUSDT">XRP/USDT</option>
           </optgroup>
-          <optgroup label="💰 Forex / Commodities (Mock Data)">
-            <option value="XAUUSD">XAU/USD - Gold</option>
-            <option value="EURUSD">EUR/USD - Euro</option>
-            <option value="GBPUSD">GBP/USD - Pound</option>
+          <optgroup label="Forex">
+            <option value="XAUUSD">XAU/USD</option>
+            <option value="EURUSD">EUR/USD</option>
+            <option value="GBPUSD">GBP/USD</option>
           </optgroup>
         </select>
         {isCrypto && (
-          <p className="text-xs text-emerald-400 mt-1">
-            ✓ Real-time data from Binance API
-          </p>
+          <div className="flex items-center gap-2">
+            <div className="w-1 h-1 bg-[#6b9080]"></div>
+            <p className="text-[10px] text-[#6b9080] tracking-wide">Live Binance data</p>
+          </div>
         )}
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1">
-          Timeframe
-        </label>
-        <select
-          value={timeframe}
-          onChange={(e) => setTimeframe(e.target.value)}
-          className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="M5">M5 (5 minutes)</option>
-          <option value="M15">M15 (15 minutes)</option>
-          <option value="M30">M30 (30 minutes)</option>
-          <option value="H1">H1 (1 hour)</option>
-          <option value="H4">H4 (4 hours)</option>
-        </select>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-2">
+          <label className="block text-[10px] text-slate-600 tracking-widest uppercase">
+            Timeframe
+          </label>
+          <select
+            value={timeframe}
+            onChange={(e) => setTimeframe(e.target.value)}
+            className="w-full px-4 py-2.5 bg-white/[0.01] border border-white/[0.05] text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
+          >
+            <option value="M5">5M</option>
+            <option value="M15">15M</option>
+            <option value="M30">30M</option>
+            <option value="H1">1H</option>
+            <option value="H4">4H</option>
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-[10px] text-slate-600 tracking-widest uppercase">Mode</label>
+          <select
+            value={mode}
+            onChange={(e) => setMode(e.target.value)}
+            className="w-full px-4 py-2.5 bg-white/[0.01] border border-white/[0.05] text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
+          >
+            <option value="SCALPING">Scalp</option>
+            <option value="INTRADAY">Intraday</option>
+          </select>
+        </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1">Mode</label>
-        <select
-          value={mode}
-          onChange={(e) => setMode(e.target.value)}
-          className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="SCALPING">SCALPING</option>
-          <option value="INTRADAY">INTRADAY</option>
-        </select>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1">
-          Max Risk Per Trade (optional)
+      <div className="space-y-2">
+        <label className="block text-[10px] text-slate-600 tracking-widest uppercase">
+          Max Risk
         </label>
         <input
           type="number"
@@ -108,8 +111,8 @@ export function SignalForm({
           onChange={(e) =>
             setMaxRiskPerTrade(e.target.value === '' ? '' : Number(e.target.value))
           }
-          className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="e.g., 100"
+          className="w-full px-4 py-2.5 bg-white/[0.01] border border-white/[0.05] text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
+          placeholder="Optional"
           step="0.01"
         />
       </div>
@@ -117,14 +120,14 @@ export function SignalForm({
       <button
         type="submit"
         disabled={loading}
-        className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors"
+        className="w-full px-6 py-3 bg-[#7c8db5]/15 hover:bg-[#7c8db5]/25 disabled:bg-white/[0.02] disabled:cursor-not-allowed text-[#9ca8c8] disabled:text-slate-600 text-sm font-medium tracking-wide transition-all border border-[#7c8db5]/20 disabled:border-white/[0.03]"
       >
-        {loading ? 'Generating...' : 'Generate AI Signal'}
+        {loading ? 'Analyzing...' : 'Generate Signal'}
       </button>
 
       {error && (
-        <div className="p-3 bg-rose-500/10 border border-rose-500/40 rounded-md text-rose-300 text-sm">
-          {error}
+        <div className="p-4 bg-[#a16e7c]/5 border border-[#a16e7c]/10">
+          <p className="text-[#a16e7c] text-xs">{error}</p>
         </div>
       )}
     </form>

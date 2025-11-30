@@ -53,10 +53,9 @@ export interface AppSettings {
 }
 
 export interface CandleDto {
-  timestamp: string;
+  time: string; // ISO 8601 timestamp from backend
   open: number;
   high: number;
   low: number;
   close: number;
-  volume?: number;
 }

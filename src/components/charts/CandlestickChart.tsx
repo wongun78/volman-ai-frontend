@@ -41,14 +41,16 @@ export function CandlestickChart({ candles, height = 320 }: CandlestickChartProp
       wickDownColor: '#ef4444',
     });
 
-    // Convert CandleDto to lightweight-charts format
-    const chartData = candles.map((candle) => ({
-      time: (new Date(candle.timestamp).getTime() / 1000) as any,
-      open: candle.open,
-      high: candle.high,
-      low: candle.low,
-      close: candle.close,
-    }));
+    // Convert CandleDto to lightweight-charts format and sort ascending by time
+    const chartData = candles
+      .map((candle) => ({
+        time: (new Date(candle.time).getTime() / 1000) as any,
+        open: candle.open,
+        high: candle.high,
+        low: candle.low,
+        close: candle.close,
+      }))
+      .sort((a, b) => a.time - b.time); // Sort ascending (oldest first)
 
     candlestickSeries.setData(chartData);
 

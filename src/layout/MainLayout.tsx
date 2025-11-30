@@ -11,38 +11,41 @@ export function MainLayout({ children }: MainLayoutProps) {
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
-    { path: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { path: '/signals', label: 'Signals', icon: '🎯' },
-    { path: '/history', label: 'History', icon: '📜' },
-    { path: '/admin/binance', label: 'Binance Admin', icon: '⚙️' },
-    { path: '/settings', label: 'Settings', icon: '🔧' },
+    { path: '/signals', label: 'Signals' },
+    { path: '/history', label: 'History' },
+    { path: '/admin/binance', label: 'Binance' },
+    { path: '/settings', label: 'Settings' },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-[#0d0f14] text-slate-100">
+      {/* Subtle background texture */}
+      <div className="fixed inset-0 grid-bg pointer-events-none"></div>
+      <div className="fixed inset-0 texture-overlay pointer-events-none"></div>
+      
       {/* Header */}
-      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="border-b border-white/[0.03] bg-[#12141a]/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-slate-50">Volman AI Trade Assistant</h1>
-              <p className="text-xs text-slate-400 mt-1">
-                Bob Volman-style price action, powered by AI.
+              <h1 className="text-xl font-semibold text-[#9ca8c8] tracking-tight">
+                Volman AI
+              </h1>
+              <p className="text-[10px] text-slate-600 mt-0.5 tracking-wider uppercase">
+                Price Action Terminal
               </p>
             </div>
-            <div className="flex gap-2 flex-wrap">
-              <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-500/15 text-blue-300 border border-blue-500/40">
-                Spring Boot 3
-              </span>
-              <span className="px-2 py-1 rounded-full text-xs font-medium bg-emerald-500/15 text-emerald-300 border border-emerald-500/40">
-                Online
-              </span>
+            <div className="flex gap-2 flex-wrap items-center">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#6b9080]/5 border border-[#6b9080]/10">
+                <div className="w-1 h-1 rounded-full bg-[#6b9080]"></div>
+                <span className="text-[10px] tracking-wider text-[#6b9080] uppercase">Online</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="border-t border-slate-800">
+        <nav className="border-t border-white/[0.02]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex gap-1 overflow-x-auto py-2">
               {navLinks.map((link) => (
@@ -50,15 +53,14 @@ export function MainLayout({ children }: MainLayoutProps) {
                   key={link.path}
                   to={link.path}
                   className={`
-                    px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap
+                    px-4 py-2 text-xs tracking-wide font-medium transition-all whitespace-nowrap
                     ${
                       isActive(link.path)
-                        ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                        ? 'text-[#9ca8c8] bg-white/[0.03]'
+                        : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.015]'
                     }
                   `}
                 >
-                  <span className="mr-2">{link.icon}</span>
                   {link.label}
                 </Link>
               ))}
@@ -68,15 +70,15 @@ export function MainLayout({ children }: MainLayoutProps) {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800 mt-12">
+      <footer className="relative border-t border-white/[0.02] mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <p className="text-center text-xs text-slate-500">
-            © 2025 Volman AI Trade Assistant · Built with React + Spring Boot
+          <p className="text-center text-[10px] text-slate-700 tracking-wider">
+            Volman AI · Powered by Groq AI · 2025
           </p>
         </div>
       </footer>

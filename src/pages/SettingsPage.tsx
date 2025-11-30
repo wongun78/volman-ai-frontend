@@ -23,39 +23,43 @@ export function SettingsPage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <Card title="⚙️ Application Settings">
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="card-shadow bg-[#12141a]/60 border border-white/5 p-6">
+        <div className="mb-6">
+          <div className="text-[10px] text-slate-600 mb-2 tracking-widest uppercase">Configuration</div>
+          <h2 className="text-base font-medium text-slate-300">Application Settings</h2>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1">
-              Default Symbol Code
+            <label className="block text-[10px] text-slate-600 mb-2 tracking-widest uppercase">
+              Default Symbol
             </label>
             <select
               value={settings.defaultSymbolCode}
               onChange={(e) =>
                 setSettings({ ...settings, defaultSymbolCode: e.target.value })
               }
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2.5 bg-white/1 border border-white/5 text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
             >
-              <optgroup label="🪙 Cryptocurrencies">
-                <option value="BTCUSDT">BTC/USDT - Bitcoin</option>
-                <option value="ETHUSDT">ETH/USDT - Ethereum</option>
-                <option value="BNBUSDT">BNB/USDT - Binance Coin</option>
-                <option value="SOLUSDT">SOL/USDT - Solana</option>
-                <option value="XRPUSDT">XRP/USDT - Ripple</option>
+              <optgroup label="Crypto">
+                <option value="BTCUSDT">BTC/USDT</option>
+                <option value="ETHUSDT">ETH/USDT</option>
+                <option value="BNBUSDT">BNB/USDT</option>
+                <option value="SOLUSDT">SOL/USDT</option>
+                <option value="XRPUSDT">XRP/USDT</option>
               </optgroup>
-              <optgroup label="💰 Forex / Commodities">
-                <option value="XAUUSD">XAU/USD - Gold</option>
-                <option value="EURUSD">EUR/USD - Euro</option>
-                <option value="GBPUSD">GBP/USD - Pound</option>
+              <optgroup label="Forex">
+                <option value="XAUUSD">XAU/USD</option>
+                <option value="EURUSD">EUR/USD</option>
+                <option value="GBPUSD">GBP/USD</option>
               </optgroup>
             </select>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-[10px] text-slate-600 mt-1.5">
               Default symbol used when loading signals
             </p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1">
+            <label className="block text-[10px] text-slate-600 mb-2 tracking-widest uppercase">
               Default Timeframe
             </label>
             <select
@@ -63,36 +67,36 @@ export function SettingsPage() {
               onChange={(e) =>
                 setSettings({ ...settings, defaultTimeframe: e.target.value })
               }
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2.5 bg-white/1 border border-white/5 text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
             >
-              <option value="M5">M5 (5 minutes)</option>
-              <option value="M15">M15 (15 minutes)</option>
-              <option value="M30">M30 (30 minutes)</option>
-              <option value="H1">H1 (1 hour)</option>
-              <option value="H4">H4 (4 hours)</option>
-              <option value="D1">D1 (1 day)</option>
+              <option value="M5">5M</option>
+              <option value="M15">15M</option>
+              <option value="M30">30M</option>
+              <option value="H1">1H</option>
+              <option value="H4">4H</option>
+              <option value="D1">1D</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1">
-              Default Trading Mode
+            <label className="block text-[10px] text-slate-600 mb-2 tracking-widest uppercase">
+              Default Mode
             </label>
             <select
               value={settings.defaultMode}
               onChange={(e) =>
                 setSettings({ ...settings, defaultMode: e.target.value })
               }
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2.5 bg-white/1 border border-white/5 text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
             >
-              <option value="SCALPING">SCALPING</option>
-              <option value="INTRADAY">INTRADAY</option>
+              <option value="SCALPING">Scalping</option>
+              <option value="INTRADAY">Intraday</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1">
-              Backend Base URL
+            <label className="block text-[10px] text-slate-600 mb-2 tracking-widest uppercase">
+              Backend URL
             </label>
             <input
               type="text"
@@ -100,51 +104,55 @@ export function SettingsPage() {
               onChange={(e) =>
                 setSettings({ ...settings, backendBaseUrl: e.target.value })
               }
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-md text-slate-100 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2.5 bg-white/1 border border-white/5 text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
               placeholder="http://localhost:8080"
             />
-            <p className="text-xs text-slate-500 mt-1">
-              URL of the Spring Boot backend (requires page refresh to take effect)
+            <p className="text-[10px] text-slate-600 mt-1.5">
+              Backend URL (requires page refresh)
             </p>
           </div>
 
           <div className="flex gap-3">
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors"
+              className="flex-1 px-6 py-3 bg-[#7c8db5]/15 hover:bg-[#7c8db5]/25 text-[#9ca8c8] text-sm font-medium tracking-wide transition-all border border-[#7c8db5]/20"
             >
               Save Settings
             </button>
             <button
               type="button"
               onClick={handleReset}
-              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-md transition-colors"
+              className="px-6 py-3 bg-white/1 hover:bg-white/2 text-slate-400 text-sm font-medium tracking-wide transition-all border border-white/5"
             >
-              Reset to Defaults
+              Reset
             </button>
           </div>
 
           {saved && (
-            <div className="p-3 bg-emerald-500/10 border border-emerald-500/40 rounded-md text-emerald-300 text-sm">
-              ✓ Settings saved successfully
+            <div className="p-4 bg-[#6b9080]/5 border border-[#6b9080]/10">
+              <span className="text-[#6b9080] text-sm">Settings saved successfully</span>
             </div>
           )}
         </form>
-      </Card>
+      </div>
 
-      <Card title="ℹ️ About Settings">
-        <div className="space-y-3 text-sm text-slate-300">
+      <div className="card-shadow bg-[#12141a]/60 border border-white/5 p-6">
+        <div className="mb-4">
+          <div className="text-[10px] text-slate-600 mb-2 tracking-widest uppercase">Information</div>
+          <h2 className="text-base font-medium text-slate-300">About Settings</h2>
+        </div>
+        <div className="space-y-3 text-sm text-slate-400">
           <p>
-            These settings are stored in your browser's localStorage and persist across sessions.
+            Settings are stored in browser localStorage and persist across sessions.
           </p>
-          <ul className="list-disc list-inside space-y-1 text-slate-400">
-            <li>Default symbol/timeframe are used when loading the Signals and Dashboard pages</li>
-            <li>Backend URL changes require a page refresh to take effect</li>
-            <li>Settings are local to this browser only (no server storage)</li>
-            <li>Click "Reset to Defaults" to restore original settings</li>
+          <ul className="list-disc list-inside space-y-1 text-slate-500 text-xs">
+            <li>Default values used when loading pages</li>
+            <li>Backend URL changes require page refresh</li>
+            <li>Settings are local to this browser only</li>
+            <li>Reset button restores original settings</li>
           </ul>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }
