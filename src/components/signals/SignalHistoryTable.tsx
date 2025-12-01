@@ -36,10 +36,13 @@ export function SignalHistoryTable({ signals, onRefresh }: SignalHistoryTablePro
               <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">Time</th>
               <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">Symbol</th>
               <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">TF</th>
+              <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">Mode</th>
               <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">Direction</th>
               <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">Entry</th>
               <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">SL</th>
               <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">TP1</th>
+              <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">R:R</th>
+              <th className="pb-3 font-normal text-[10px] tracking-widest uppercase">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -50,12 +53,19 @@ export function SignalHistoryTable({ signals, onRefresh }: SignalHistoryTablePro
                 </td>
                 <td className="py-3 text-slate-300">{signal.symbolCode}</td>
                 <td className="py-3 text-slate-400">{signal.timeframe}</td>
+                <td className="py-3 text-slate-400 text-xs">{signal.mode}</td>
                 <td className="py-3">
                   <DirectionBadge direction={signal.direction} />
                 </td>
                 <td className="py-3 text-slate-300">{formatNum(signal.entryPrice)}</td>
                 <td className="py-3 text-slate-300">{formatNum(signal.stopLoss)}</td>
                 <td className="py-3 text-[#6b9080]">{formatNum(signal.takeProfit1)}</td>
+                <td className="py-3 text-slate-400">{formatNum(signal.riskReward1)}x</td>
+                <td className="py-3">
+                  <span className={`text-xs ${signal.actionable ? 'text-[#6b9080]' : 'text-slate-500'}`}>
+                    {signal.actionable ? '✓' : '✗'}
+                  </span>
+                </td>
               </tr>
             ))}
           </tbody>

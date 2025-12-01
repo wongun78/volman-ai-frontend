@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import type { AppSettings } from '../types/trading';
+import type { AppSettings, TradingMode } from '../types/trading';
 import { loadSettings, saveSettings, defaultSettings } from '../services/settingsService';
+import { TRADING_MODE_CONFIG } from '../types/trading';
 
 export function SettingsPage() {
   const [settings, setSettings] = useState<AppSettings>(loadSettings());
@@ -84,12 +85,13 @@ export function SettingsPage() {
             <select
               value={settings.defaultMode}
               onChange={(e) =>
-                setSettings({ ...settings, defaultMode: e.target.value })
+                setSettings({ ...settings, defaultMode: e.target.value as TradingMode })
               }
               className="w-full px-4 py-2.5 bg-white/1 border border-white/5 text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
             >
-              <option value="SCALPING">Scalping</option>
-              <option value="INTRADAY">Intraday</option>
+              <option value="SCALPING">{TRADING_MODE_CONFIG.SCALPING.label}</option>
+              <option value="INTRADAY">{TRADING_MODE_CONFIG.INTRADAY.label}</option>
+              <option value="SWING">{TRADING_MODE_CONFIG.SWING.label}</option>
             </select>
           </div>
 

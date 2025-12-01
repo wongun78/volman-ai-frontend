@@ -1,4 +1,4 @@
-import type { AppSettings } from '../types/trading';
+import type { AppSettings, TradingMode } from '../types/trading';
 import { getApiBase } from './apiClient';
 
 const STORAGE_KEY = 'volman-ai-settings';
@@ -6,7 +6,7 @@ const STORAGE_KEY = 'volman-ai-settings';
 export const defaultSettings: AppSettings = {
   defaultSymbolCode: 'BTCUSDT',
   defaultTimeframe: 'M5',
-  defaultMode: 'SCALPING',
+  defaultMode: 'SCALPING' as TradingMode,
   backendBaseUrl: getApiBase(),
 };
 

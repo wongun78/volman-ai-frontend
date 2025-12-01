@@ -1,10 +1,14 @@
 import type { Direction } from '../../types/trading';
+import { DIRECTION_METADATA } from '../../types/trading';
 
 interface DirectionBadgeProps {
   direction: Direction;
+  showArrow?: boolean;
 }
 
-export function DirectionBadge({ direction }: DirectionBadgeProps) {
+export function DirectionBadge({ direction, showArrow = true }: DirectionBadgeProps) {
+  const metadata = DIRECTION_METADATA[direction];
+  
   const styles = {
     LONG: 'bg-[#6b9080]/10 text-[#6b9080] border border-[#6b9080]/20',
     SHORT: 'bg-[#a16e7c]/10 text-[#a16e7c] border border-[#a16e7c]/20',
@@ -13,7 +17,7 @@ export function DirectionBadge({ direction }: DirectionBadgeProps) {
 
   return (
     <span className={`px-3 py-1 text-xs font-medium tracking-wide ${styles[direction]}`}>
-      {direction}
+      {showArrow && metadata.arrow} {metadata.label}
     </span>
   );
 }

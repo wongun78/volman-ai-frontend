@@ -8,6 +8,7 @@ import { SignalForm } from '../components/signals/SignalForm';
 import { LatestSignalCard } from '../components/signals/LatestSignalCard';
 import { SignalHistoryTable } from '../components/signals/SignalHistoryTable';
 import { CandlestickChart } from '../components/charts/CandlestickChart';
+import { ApiError } from '../services/apiClient';
 
 export function SignalsPage() {
   const settings = loadSettings();
@@ -73,15 +74,30 @@ export function SignalsPage() {
         `AI signal generated: ${signal.direction} ${signal.symbolCode} ${signal.timeframe}`
       );
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
-      setError(errorMessage);
+      // Enhanced error handling with ApiError
+      let errorMessage = 'An unknown error occurred';
       
-      // Show error toast with special handling for Groq 401
-      if (errorMessage.includes('Groq AI unauthorized') || errorMessage.includes('401')) {
-        toast.error('Groq AI unauthorized. Please check GROQ_API_KEY on the backend.');
-      } else {
-        toast.error('Failed to generate AI signal. Please try again.');
+      if (err instanceof ApiError) {
+        errorMessage = err.getUserMessage();
+        
+        // Show specific toast based on error code
+        if (err.code === 'SYMBOL_NOT_FOUND') {
+          toast.error('Symbol not found. Please check the symbol code.');
+        } else if (err.code === 'INVALID_SIGNAL') {
+          toast.error('Invalid signal detected. Try different parameters.');
+        } else if (err.code === 'MARKET_DATA_ERROR') {
+          toast.error('Cannot fetch market data. Try again later.');
+        } else if (err.code === 'AI_SERVICE_ERROR') {
+          toast.error('AI service unavailable. Please try again.');
+        } else {
+          toast.error(errorMessage);
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+        toast.error(errorMessage);
       }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

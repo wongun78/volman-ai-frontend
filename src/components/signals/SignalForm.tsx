@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import type { AiSuggestRequestDto } from '../../types/trading';
+import type { AiSuggestRequestDto, TradingMode } from '../../types/trading';
+import { TRADING_MODE_CONFIG } from '../../types/trading';
 
 interface SignalFormProps {
   onSubmit: (request: AiSuggestRequestDto) => Promise<void>;
@@ -7,7 +8,7 @@ interface SignalFormProps {
   error: string | null;
   initialSymbol?: string;
   initialTimeframe?: string;
-  initialMode?: string;
+  initialMode?: TradingMode;
 }
 
 export function SignalForm({
@@ -20,7 +21,7 @@ export function SignalForm({
 }: SignalFormProps) {
   const [symbolCode, setSymbolCode] = useState(initialSymbol);
   const [timeframe, setTimeframe] = useState(initialTimeframe);
-  const [mode, setMode] = useState(initialMode);
+  const [mode, setMode] = useState<TradingMode>(initialMode);
   const [maxRiskPerTrade, setMaxRiskPerTrade] = useState<number | ''>('');
 
   const isCrypto = symbolCode.endsWith('USDT') || symbolCode.endsWith('BTC') || symbolCode.endsWith('ETH');
@@ -92,11 +93,12 @@ export function SignalForm({
           <label className="block text-[10px] text-slate-600 tracking-widest uppercase">Mode</label>
           <select
             value={mode}
-            onChange={(e) => setMode(e.target.value)}
+            onChange={(e) => setMode(e.target.value as TradingMode)}
             className="w-full px-4 py-2.5 bg-white/[0.01] border border-white/[0.05] text-slate-300 text-sm focus:outline-none focus:border-[#7c8db5]/30 transition-all"
           >
-            <option value="SCALPING">Scalp</option>
-            <option value="INTRADAY">Intraday</option>
+            <option value="SCALPING">{TRADING_MODE_CONFIG.SCALPING.label} ({TRADING_MODE_CONFIG.SCALPING.candleCount} candles)</option>
+            <option value="INTRADAY">{TRADING_MODE_CONFIG.INTRADAY.label} ({TRADING_MODE_CONFIG.INTRADAY.candleCount} candles)</option>
+            <option value="SWING">{TRADING_MODE_CONFIG.SWING.label} ({TRADING_MODE_CONFIG.SWING.candleCount} candles)</option>
           </select>
         </div>
       </div>

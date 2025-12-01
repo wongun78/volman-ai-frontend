@@ -1,5 +1,4 @@
 import type { AiSignalResponseDto } from '../../types/trading';
-import { DirectionBadge } from '../common/DirectionBadge';
 
 interface LatestSignalCardProps {
   signal: AiSignalResponseDto | null;
@@ -110,6 +109,32 @@ export function LatestSignalCard({ signal }: LatestSignalCardProps) {
               <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">R:R Ratio 2</div>
               <div className="text-base font-medium text-slate-400">
                 {formatNum(signal.riskReward2)}x
+              </div>
+            </div>
+          </div>
+
+          {/* Computed Fields from Backend */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-white/1 p-3 border border-white/5">
+              <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">Status</div>
+              <div className={`text-sm font-medium ${
+                signal.actionable 
+                  ? 'text-[#6b9080]' 
+                  : 'text-slate-500'
+              }`}>
+                {signal.actionable ? '✓ Actionable' : '✗ Not Ready'}
+              </div>
+            </div>
+            <div className="bg-white/1 p-3 border border-white/5">
+              <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">Risk Amount</div>
+              <div className="text-sm font-medium text-slate-400">
+                {formatNum(signal.riskAmount)}
+              </div>
+            </div>
+            <div className="bg-white/1 p-3 border border-white/5">
+              <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">Profit (TP1)</div>
+              <div className="text-sm font-medium text-[#6b9080]">
+                {formatNum(signal.potentialProfitTp1)}
               </div>
             </div>
           </div>
