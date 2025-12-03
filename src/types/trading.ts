@@ -30,6 +30,18 @@ export const DIRECTION_METADATA: Record<Direction, DirectionMetadata> = {
 
 export type TradingMode = 'SCALPING' | 'INTRADAY' | 'SWING';
 
+export type PositionStatus = 'PENDING' | 'OPEN' | 'CLOSED' | 'CANCELLED';
+
+export type ExitReason = 
+  | 'TP1_HIT' 
+  | 'TP2_HIT' 
+  | 'TP3_HIT' 
+  | 'SL_HIT' 
+  | 'MANUAL_EXIT' 
+  | 'TIME_EXIT' 
+  | 'TRAILING_STOP' 
+  | 'RISK_MANAGEMENT';
+
 export const TRADING_MODE_CONFIG: Record<TradingMode, { candleCount: number; label: string }> = {
   SCALPING: { candleCount: 50, label: 'Scalping' },
   INTRADAY: { candleCount: 100, label: 'Intraday' },
@@ -114,4 +126,101 @@ export interface CandleDto {
   low: number;
   close: number;
   volume?: number; // Optional volume data
+}
+
+// ==================== Position DTOs ====================
+export interface PositionResponseDto {
+  id: number;
+  signalId: number | null;
+  symbolCode: string;
+  status: PositionStatus;
+  direction: Direction;
+  
+  // Prices
+  plannedEntryPrice: number;
+  actualEntryPrice: number | null;
+  stopLoss: number;
+  takeProfit1: number;
+  takeProfit2: number | null;
+  takeProfit3: number | null;
+  exitPrice: number | null;
+  
+  // Trade metrics
+  quantity: number;
+  realizedPnL: number | null;
+  realizedPnLPercent: number | null;
+  actualRiskReward: number | null;
+  exitReason: ExitReason | null;
+  
+  // Timestamps
+  openedAt: string | null;
+  closedAt: string | null;
+  createdAt: string;
+  createdBy: string;
+  
+  // Additional
+  fees: number;
+  slippage: number | null;
+  durationMs: number | null;
+  notes: string | null;
+}
+
+export interface OpenPositionRequestDto {
+  signalId?: number;
+  symbolCode: string;
+  direction: Direction;
+  plannedEntryPrice: number;
+  stopLoss: number;
+  takeProfit1: number;
+  takeProfit2?: number;
+  takeProfit3?: number;
+  quantity: number;
+  notes?: string;
+}
+
+export interface ExecutePositionRequestDto {
+  actualEntryPrice: number;
+}
+
+export interface ClosePositionRequestDto {
+  exitPrice: number;
+  exitReason: ExitReason;
+}
+
+export interface PortfolioStatsDto {
+  // Position counts
+  totalPositions: number;
+  openPositions: number;
+  closedPositions: number;
+  pendingPositions: number;
+  
+  // P&L metrics
+  totalPnL: number;
+  averagePnL: number;
+  bestTradePnL: number;
+  worstTradePnL: number;
+  
+  // Win rate
+  winRate: number;
+  longWinRate: number;
+  shortWinRate: number;
+  
+  // Risk metrics
+  averageRiskReward: number;
+  totalFees: number | null;
+  
+  // Symbol breakdown
+  btcPnL: number | null;
+  ethPnL: number | null;
+  
+  // Streaks
+  consecutiveWins: number | null;
+  consecutiveLosses: number | null;
+  maxConsecutiveWins: number | null;
+  maxConsecutiveLosses: number | null;
+  
+  // Duration
+  averageTradeDurationMs: number | null;
+  shortestTradeMs: number | null;
+  longestTradeMs: number | null;
 }

@@ -5,6 +5,7 @@ import { SignalsPage } from './pages/SignalsPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { BinanceAdminPage } from './pages/BinanceAdminPage';
 import { SettingsPage } from './pages/SettingsPage';
+import PositionsPage from './pages/PositionsPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/signals" replace />} />
           <Route path="/signals" element={<SignalsPage />} />
+          <Route path="/positions" element={<PositionsPage />} />
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/admin/binance" element={<BinanceAdminPage />} />
           <Route path="/settings" element={<SettingsPage />} />

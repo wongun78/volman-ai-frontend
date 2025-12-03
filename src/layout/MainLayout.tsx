@@ -12,6 +12,7 @@ export function MainLayout({ children }: MainLayoutProps) {
 
   const navLinks = [
     { path: '/signals', label: 'Signals' },
+    { path: '/positions', label: 'Positions' },
     { path: '/history', label: 'History' },
     { path: '/admin/binance', label: 'Binance' },
     { path: '/settings', label: 'Settings' },

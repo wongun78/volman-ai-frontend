@@ -116,8 +116,8 @@ export function SignalsPage() {
               <p className="text-slate-600 text-xs tracking-wide">Bob Volman Price Action Analysis</p>
             </div>
             <div className="text-right">
-              <div className="text-[10px] text-slate-700 tracking-wider uppercase mb-1">Market Time</div>
-              <div className="text-sm text-slate-400">{new Date().toLocaleTimeString()}</div>
+              <div className="text-[10px] text-slate-700 tracking-wider uppercase mb-1">Market Time (UTC)</div>
+              <div className="text-sm text-slate-400">{new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}</div>
             </div>
           </div>
         </div>

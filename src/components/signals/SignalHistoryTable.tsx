@@ -49,7 +49,7 @@ export function SignalHistoryTable({ signals, onRefresh }: SignalHistoryTablePro
             {signals.map((signal) => (
               <tr key={signal.id} className="border-b border-white/3">
                 <td className="py-3 text-slate-500 text-xs">
-                  {new Date(signal.createdAt).toLocaleString()}
+                  {new Date(signal.createdAt).toLocaleString('en-US', { timeZone: 'UTC', hour12: false })} UTC
                 </td>
                 <td className="py-3 text-slate-300">{signal.symbolCode}</td>
                 <td className="py-3 text-slate-400">{signal.timeframe}</td>
