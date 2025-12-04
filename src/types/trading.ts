@@ -12,6 +12,35 @@ export interface ErrorDetail {
   details?: Record<string, unknown>;
 }
 
+// ==================== Authentication Types ====================
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  fullName?: string;
+  roles: string[];
+  status: string;
+}
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  username: string;
+  email: string;
+  password: string;
+  fullName?: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  tokenType: string;
+  expiresIn: number;
+  user: User;
+}
+
 // ==================== Enums ====================
 export type Direction = 'LONG' | 'SHORT' | 'NEUTRAL';
 
@@ -149,6 +178,12 @@ export interface PositionResponseDto {
   quantity: number;
   realizedPnL: number | null;
   realizedPnLPercent: number | null;
+  
+  // Audit fields (ownership tracking)
+  createdBy?: string;
+  lastModifiedBy?: string;
+  createdAt?: string;
+  updatedAt?: string;
   actualRiskReward: number | null;
   exitReason: ExitReason | null;
   

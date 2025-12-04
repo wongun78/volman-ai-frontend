@@ -1,4 +1,5 @@
 import type { ApiResponse } from '../types/trading';
+import { getToken, logout } from './authService';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
@@ -9,11 +10,39 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 export async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const url = `${API_BASE}${path}`;
   
+  // Get JWT token from localStorage
+  const token = getToken();
+  
+  // Inject Authorization header if token exists
+  const headers = {
+    ...options?.headers,
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+  };
+  
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(url, {
+      ...options,
+      headers,
+    });
     
     // Parse response body
     const apiResponse: ApiResponse<T> = await response.json();
+    
+    // Handle 401 Unauthorized - token expired or invalid
+    if (response.status === 401) {
+      logout();
+      window.location.href = '/login';
+      throw new ApiError('Session expired. Please login again.', 401);
+    }
+    
+    // Handle 403 Forbidden - insufficient permissions
+    if (response.status === 403) {
+      throw new ApiError(
+        apiResponse.error?.message || 'Access denied. You don\'t have permission.',
+        403,
+        'ACCESS_DENIED'
+      );
+    }
     
     if (!response.ok || !apiResponse.success) {
       // Extract error details from ApiResponse wrapper

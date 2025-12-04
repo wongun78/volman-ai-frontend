@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { UserProfile } from '../components/auth/UserProfile';
+import { isAdmin } from '../services/authService';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -14,9 +16,13 @@ export function MainLayout({ children }: MainLayoutProps) {
     { path: '/signals', label: 'Signals' },
     { path: '/positions', label: 'Positions' },
     { path: '/history', label: 'History' },
-    { path: '/admin/binance', label: 'Binance' },
     { path: '/settings', label: 'Settings' },
   ];
+  
+  // Add Binance admin link only for admins
+  const allNavLinks = isAdmin() 
+    ? [...navLinks.slice(0, 3), { path: '/admin/binance', label: 'Binance' }, ...navLinks.slice(3)]
+    : navLinks;
 
   return (
     <div className="min-h-screen bg-[#0d0f14] text-slate-100">
@@ -41,6 +47,9 @@ export function MainLayout({ children }: MainLayoutProps) {
                 <div className="w-1 h-1 rounded-full bg-[#6b9080]"></div>
                 <span className="text-[10px] tracking-wider text-[#6b9080] uppercase">Online</span>
               </div>
+              
+              {/* User Profile */}
+              <UserProfile />
             </div>
           </div>
         </div>
@@ -49,7 +58,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         <nav className="border-t border-white/[0.02]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex gap-1 overflow-x-auto py-2">
-              {navLinks.map((link) => (
+              {allNavLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
