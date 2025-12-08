@@ -9,9 +9,7 @@ interface PositionCardProps {
 }
 
 const EXIT_REASON_LABELS: Record<ExitReason, string> = {
-  TP1_HIT: 'TP1 Hit',
-  TP2_HIT: 'TP2 Hit',
-  TP3_HIT: 'TP3 Hit',
+  TP_HIT: 'Take Profit',
   SL_HIT: 'Stop Loss',
   MANUAL_EXIT: 'Manual',
   TIME_EXIT: 'Time Exit',
@@ -140,8 +138,8 @@ export default function PositionCard({ position, onUpdate }: PositionCardProps) 
             <div className="font-mono text-sm font-medium text-[#a16e7c]">${position.stopLoss.toFixed(2)}</div>
           </div>
           <div className="bg-white/1 p-3 border border-white/5">
-            <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">TP1</div>
-            <div className="font-mono text-sm font-medium text-[#6b9080]">${position.takeProfit1.toFixed(2)}</div>
+            <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">Take Profit</div>
+            <div className="font-mono text-sm font-medium text-[#6b9080]">${position.takeProfit.toFixed(2)}</div>
           </div>
         </div>
 

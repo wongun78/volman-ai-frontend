@@ -81,9 +81,7 @@ export function getExitReasonLabel(reason: ExitReason | null): string {
   if (!reason) return '-';
   
   const labels: Record<ExitReason, string> = {
-    TP1_HIT: 'TP1 Hit',
-    TP2_HIT: 'TP2 Hit',
-    TP3_HIT: 'TP3 Hit',
+    TP_HIT: 'Take Profit',
     SL_HIT: 'Stop Loss',
     MANUAL_EXIT: 'Manual Exit',
     TIME_EXIT: 'Time Exit',

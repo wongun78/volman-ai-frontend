@@ -27,9 +27,7 @@ export function LatestSignalCard({ signal, onPositionCreated }: LatestSignalCard
         direction: signal.direction,
         plannedEntryPrice: signal.entryPrice,
         stopLoss: signal.stopLoss!,
-        takeProfit1: signal.takeProfit1!,
-        takeProfit2: signal.takeProfit2 || undefined,
-        takeProfit3: signal.takeProfit3 || undefined,
+        takeProfit: signal.takeProfit!,
         quantity: parseFloat(quantity),
         notes: `AI Signal #${signal.id} - ${signal.mode}`,
       });
@@ -111,41 +109,19 @@ export function LatestSignalCard({ signal, onPositionCreated }: LatestSignalCard
             </div>
           </div>
 
-          {/* Take Profits */}
-          <div className="grid grid-cols-3 gap-3">
-            <div className="bg-white/1 p-3 border border-[#6b9080]/10">
-              <div className="text-[10px] text-[#6b9080]/70 tracking-widest uppercase mb-1">TP1</div>
-              <div className="text-base font-medium text-[#6b9080]">
-                {formatNum(signal.takeProfit1)}
-              </div>
-            </div>
-            <div className="bg-white/1 p-3 border border-[#6b9080]/10">
-              <div className="text-[10px] text-[#6b9080]/70 tracking-widest uppercase mb-1">TP2</div>
-              <div className="text-base font-medium text-[#6b9080]">
-                {formatNum(signal.takeProfit2)}
-              </div>
-            </div>
-            <div className="bg-white/1 p-3 border border-[#6b9080]/10">
-              <div className="text-[10px] text-[#6b9080]/70 tracking-widest uppercase mb-1">TP3</div>
-              <div className="text-base font-medium text-[#6b9080]">
-                {formatNum(signal.takeProfit3)}
-              </div>
+          {/* Take Profit */}
+          <div className="bg-white/1 p-4 border border-[#6b9080]/10">
+            <div className="text-[10px] text-[#6b9080]/70 tracking-widest uppercase mb-2">Take Profit</div>
+            <div className="text-lg font-medium text-[#6b9080]">
+              {formatNum(signal.takeProfit)}
             </div>
           </div>
 
           {/* Risk Reward */}
-          <div className="flex gap-3">
-            <div className="flex-1 bg-white/1 p-3 border border-white/5">
-              <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">R:R Ratio 1</div>
-              <div className="text-base font-medium text-slate-400">
-                {formatNum(signal.riskReward1)}x
-              </div>
-            </div>
-            <div className="flex-1 bg-white/1 p-3 border border-white/5">
-              <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">R:R Ratio 2</div>
-              <div className="text-base font-medium text-slate-400">
-                {formatNum(signal.riskReward2)}x
-              </div>
+          <div className="bg-white/1 p-4 border border-white/5">
+            <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-2">Risk:Reward Ratio</div>
+            <div className="text-lg font-medium text-slate-400">
+              {formatNum(signal.riskReward)}x
             </div>
           </div>
 
@@ -168,9 +144,9 @@ export function LatestSignalCard({ signal, onPositionCreated }: LatestSignalCard
               </div>
             </div>
             <div className="bg-white/1 p-3 border border-white/5">
-              <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">Profit (TP1)</div>
+              <div className="text-[10px] text-slate-600 tracking-widest uppercase mb-1">Potential Profit</div>
               <div className="text-sm font-medium text-[#6b9080]">
-                {formatNum(signal.potentialProfitTp1)}
+                {formatNum(signal.potentialProfit)}
               </div>
             </div>
           </div>
@@ -221,8 +197,8 @@ export function LatestSignalCard({ signal, onPositionCreated }: LatestSignalCard
                 <span className="text-red-400 font-medium">${signal.stopLoss?.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">Take Profit 1:</span>
-                <span className="text-green-400 font-medium">${signal.takeProfit1?.toFixed(2)}</span>
+                <span className="text-gray-400">Take Profit:</span>
+                <span className="text-green-400 font-medium">${signal.takeProfit?.toFixed(2)}</span>
               </div>
             </div>
 

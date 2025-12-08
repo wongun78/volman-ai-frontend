@@ -19,9 +19,7 @@ export type TradingMode = 'SCALPING' | 'INTRADAY' | 'SWING';
 export type PositionStatus = 'PENDING' | 'OPEN' | 'CLOSED' | 'CANCELLED';
 
 export type ExitReason = 
-  | 'TP1_HIT' 
-  | 'TP2_HIT' 
-  | 'TP3_HIT' 
+  | 'TP_HIT' 
   | 'SL_HIT' 
   | 'MANUAL_EXIT' 
   | 'TIME_EXIT' 
@@ -47,21 +45,17 @@ export interface AiSignalResponseDto {
   // Price levels
   entryPrice: number | null;
   stopLoss: number | null;
-  takeProfit1: number | null;
-  takeProfit2: number | null;
-  takeProfit3: number | null;
+  takeProfit: number | null;
   
-  // Risk/Reward ratios
-  riskReward1: number | null;
-  riskReward2: number | null;
-  riskReward3: number | null;
+  // Risk/Reward ratio
+  riskReward: number | null;
   
   // AI reasoning
   reasoning: string | null;
   
   // Computed fields from backend
   actionable: boolean;
-  potentialProfitTp1: number | null;
+  potentialProfit: number | null;
   riskAmount: number | null;
   
   // Audit fields
@@ -91,9 +85,7 @@ export interface PositionResponseDto {
   plannedEntryPrice: number;
   actualEntryPrice: number | null;
   stopLoss: number;
-  takeProfit1: number;
-  takeProfit2: number | null;
-  takeProfit3: number | null;
+  takeProfit: number;
   exitPrice: number | null;
   
   // Trade metrics
@@ -126,9 +118,7 @@ export interface OpenPositionRequestDto {
   direction: Direction;
   plannedEntryPrice: number;
   stopLoss: number;
-  takeProfit1: number;
-  takeProfit2?: number;
-  takeProfit3?: number;
+  takeProfit: number;
   quantity: number;
   notes?: string;
 }
